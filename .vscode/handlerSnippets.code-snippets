@@ -24,8 +24,6 @@
 	  "Command Handler ": {
 		"prefix": "chandler",
 		"body": [
-		  "    public class Create",
-		  "    {",
 		  "        public class Command : IRequest",
 		  "        {",
 		  " ",
@@ -42,13 +40,12 @@
 		  "            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)",
 		  "            {",
 		  "                // Handler Logic goes here...",
-		  "",
+		  "var success = await _context.SaveChangesAsync();",
 		  "                if(success) return Unit.Value;",
 		  "",
 		  "                throw new Exception(\"Problem saving changes\");",
 		  "            }",
-		  "        }",
-		  "    }"
+		  "        }"
 		],
 		"description": "Command Handler "
 	  }
