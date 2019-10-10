@@ -3,54 +3,55 @@ import { Item, Image, Button, Label, Segment } from 'semantic-ui-react'
 import { IActivity } from '../../../app/models/activity';
 
 interface IProps {
-    activities: IActivity[]
+  activities: IActivity[]
+  selectActivity: (id: string) => void;
 }
 
-const ActivityList: React.FC<IProps> = ({activities}) => {
-    return (
-        <Segment clearing>
-        <Item.Group divided>
+const ActivityList: React.FC<IProps> = ({ activities, selectActivity }) => {
+  return (
+    <Segment clearing>
+      <Item.Group divided>
 
         {
-            activities.map(activity => (
-                <Item key={activity.id}>
-          <Item.Content>
-            <Item.Header as='a'>{activity.title}</Item.Header>
-            <Item.Meta>{activity.date}</Item.Meta>
-            <Item.Description>
-              <div>{activity.description}</div>
-              <div>{activity.city}, {activity.venue}</div>
-            </Item.Description>
-            <Item.Extra>
-                <Button floated='right' content='View' color='blue'/>
-                <Label basic content={activity.category}/>
-            </Item.Extra>
-          </Item.Content>
-        </Item>
-            ))
+          activities.map(activity => (
+            <Item key={activity.id}>
+              <Item.Content>
+                <Item.Header as='a'>{activity.title}</Item.Header>
+                <Item.Meta>{activity.date}</Item.Meta>
+                <Item.Description>
+                  <div>{activity.description}</div>
+                  <div>{activity.city}, {activity.venue}</div>
+                </Item.Description>
+                <Item.Extra>
+                  <Button onClick={() => selectActivity(activity.id)} floated='right' content='View' color='blue' />
+                  <Label basic content={activity.category} />
+                </Item.Extra>
+              </Item.Content>
+            </Item>
+          ))
         }
 
 
 
         <Item>
-        <Item.Content>
-          <Item.Header as='a'>Title</Item.Header>
-          <Item.Meta>Date</Item.Meta>
-          <Item.Description>
-            <div>Description</div>
-            <div>City, Venue</div>
-          </Item.Description>
-          <Item.Extra>
-              <Button floated='right' content='View' color='blue'/>
-              <Label basic content='Category'/>
-          </Item.Extra>
-        </Item.Content>
-      </Item>
-  
-    
-      </Item.Group>            
-        </Segment>
-    )
+          <Item.Content>
+            <Item.Header as='a'>Title</Item.Header>
+            <Item.Meta>Date</Item.Meta>
+            <Item.Description>
+              <div>Description</div>
+              <div>City, Venue</div>
+            </Item.Description>
+            <Item.Extra>
+              <Button floated='right' content='View' color='blue' />
+              <Label basic content='Category' />
+            </Item.Extra>
+          </Item.Content>
+        </Item>
+
+
+      </Item.Group>
+    </Segment>
+  )
 }
 
 export default ActivityList
