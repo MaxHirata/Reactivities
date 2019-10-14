@@ -1,11 +1,12 @@
 import React, { useState, useEffect, Fragment } from "react";
 //import logo from './logo.svg';
-import axios from "axios";
+//import axios from "axios";
 //import { Header, Icon, List, Container } from 'semantic-ui-react';
 import { IActivity } from "../models/activity";
 import NavBar from "../../features/nav/NavBar";
 import ActivityDashboard from "../../features/activity/dashboard/ActivityDashboard";
 import { Container } from "semantic-ui-react";
+import agent from "../api/agent";
 
 const App = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
@@ -21,19 +22,28 @@ const App = () => {
   };
 
   const handleCreateActivity = (activity: IActivity) => {
-    setActivities([...activities, activity]);
-    setSelectedActivity(activity);
-    setEditMode(false);
+    agent.Activities.create(activity).then(() => {
+      setActivities([...activities, activity]);
+      setSelectedActivity(activity);
+      setEditMode(false);
+    });
   };
 
   const handleEditActivity = (activity: IActivity) => {
-    setActivities([...activities.filter(a => a.id !== activity.id), activity]);
+
+    agent.Activities.update(activity).then(() => {
+          setActivities([...activities.filter(a => a.id !== activity.id), activity]);
     setSelectedActivity(activity);
     setEditMode(false);
+    })
+
   };
 
   const handlesDeleteActivity = (id: string) => {
-    setActivities([...activities.filter(a => a.id !== id)]);
+    agent.Activities.delete(id).then( () => {
+      setActivities([...activities.filter(a => a.id !== id)]);
+    })
+    
   };
 
   const handleOpenCreateForm = () => {
@@ -42,9 +52,9 @@ const App = () => {
   };
 
   useEffect(() => {
-    axios.get<IActivity[]>("http://localhost:5000/api/activities").then(res => {
+    agent.Activities.list().then(res => {
       let activities: IActivity[] = [];
-      res.data.forEach(activity => {
+      res.forEach(activity => {
         activity.date = activity.date.split(".")[0];
         activities.push(activity);
       });
