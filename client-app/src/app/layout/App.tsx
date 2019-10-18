@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useContext } from 'react';
+import React, {Fragment } from 'react';
 import NavBar from '../../features/nav/NavBar';
 import ActivityDashboard from '../../features/activity/dashboard/ActivityDashboard';
 import { Container } from 'semantic-ui-react';
