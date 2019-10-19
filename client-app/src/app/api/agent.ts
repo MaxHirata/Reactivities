@@ -16,11 +16,19 @@ const requests = {
 };
 
 const Activities = {
+<<<<<<< HEAD
 	list: (): Promise<IActivity[]> => requests.get('/activities'),
 	details: (id: string) => requests.get(`/activities/${id}`),
 	create: (activity: IActivity) => requests.post('/activities', activity),
 	update: (activity: IActivity) => requests.put(`/activities/${activity.id}`, activity),
 	delete: (id: string) => requests.del(`/activities/${id}`)
+=======
+  list: (): Promise<IActivity[]> => requests.get("/activities"),
+  details: (id: string) => requests.get(`/activities/${id}`),
+  create: (activity: IActivity) => requests.post("/activities", activity),
+  update: (activity: IActivity) => requests.put(`/activities/${activity.id}`, activity),
+  delete: (id: string) => requests.del(`/activities/${id}`)
+>>>>>>> 6edc103c5b9d4a110267813cca308ec03cd1bd49
 };
 
 export default {
