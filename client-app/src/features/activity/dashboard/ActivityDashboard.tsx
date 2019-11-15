@@ -6,22 +6,25 @@ import ActivityList from './ActivityList';
 //import ActivityDetails from '../details/ActivityDetails';
 //import ActivityForm from '../form/ActivityForm';
 import { observer } from 'mobx-react-lite';
-import ActivityStore from '../../../app/stores/activityStore';
+//import ActivityStore from '../../../app/stores/activityStore';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
+import { RootStoreContext } from '../../../app/stores/rootStore';
 
 
 const ActivityDashboard: React.FC = () => {
 
-	const activityStore = useContext(ActivityStore);
+	//const activityStore = useContext(ActivityStore);
+	const rootStore = useContext(RootStoreContext);
+	const {loadActivities, loadingInitial} = rootStore.activityStore;
 
 	useEffect(
 		() => {
-			activityStore.loadActivities();
+			loadActivities();
 		},
-		[ activityStore ]
+		[ loadActivities ]
 	);
 
-	if (activityStore.loadingInitial) return <LoadingComponent content="Loading Activities..." />;
+	if (loadingInitial) return <LoadingComponent content="Loading Activities..." />;
 
 	//const activityStore = useContext(ActivityStore);
 	//const {editMode, activity} = activityStore;
