@@ -25,7 +25,11 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({ match, h
 		() => {
 			loadActivity(match.params.id);
 		},
-		[ loadActivity, match.params.id, history ]
+		[
+			loadActivity,
+			match.params.id,
+			history
+		]
 	);
 
 	if (loadingInitial) return <LoadingComponent content="Loading activity..." />;
@@ -40,7 +44,7 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({ match, h
 				<ActivityDetailedChat />
 			</Grid.Column>
 			<Grid.Column width={6}>
-				<ActivityDetailedSidebar />
+				<ActivityDetailedSidebar attendees={activity.attendees} />
 			</Grid.Column>
 		</Grid>
 		// <Card fluid>
