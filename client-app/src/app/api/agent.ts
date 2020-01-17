@@ -6,6 +6,19 @@ import { IUser, IUserFormValues } from '../models/user';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
+axios.interceptors.request.use(
+	(config) => {
+		const token = window.localStorage.getItem('jwt');
+		if (token) {
+			config.headers.Authorization = `Bearer ${token}`;
+		}
+		return config;
+	},
+	(error) => {
+		return Promise.reject(error);
+	}
+);
+
 axios.interceptors.response.use(undefined, (error) => {
 	const { status, data, config } = error.response;
 
@@ -23,9 +36,8 @@ axios.interceptors.response.use(undefined, (error) => {
 	if (status === 500) {
 		toast.error('Server Error - Check the terminal for more info!!');
 	}
-	throw error;
+	throw error.response;
 });
-
 
 const responseBody = (res: AxiosResponse) => res.data;
 
@@ -51,7 +63,7 @@ const User = {
 	current: (): Promise<IUser> => requests.get('/user'),
 	login: (user: IUserFormValues): Promise<IUser> => requests.post(`/user/login`, user),
 	register: (user: IUserFormValues): Promise<IUser> => requests.post(`/user/register`, user)
-}
+};
 
 export default {
 	Activities,
